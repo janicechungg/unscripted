@@ -1,10 +1,16 @@
-// Navbar.js
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style.css';
 
 export function Navbar() {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/login");
+    }
+
     return (
         <nav className="navbar navbar-expand-lg custom-navbar">
             <div className="container-fluid">
@@ -24,9 +30,9 @@ export function Navbar() {
                             <Link className="nav-link" to="/post">Post</Link>
                         </li>
                     </ul>
-                    <span className="navbar-text">
-                        Navbar text with an inline element
-                    </span>
+                    <button className="navbar-text " onClick={handleLogout}>
+                        Logout
+                    </button>
                 </div>
             </div>
         </nav>
