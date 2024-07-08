@@ -4,13 +4,13 @@ import { Navbar } from '../components/NavBar'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style.css';
 
-export function Home() {
+export function Post() {
     const location = useLocation();
 
     return (
         <div>
-            {location.pathname === '/' && <Navbar/>}
-            <h1>Home</h1>
+            {location.pathname === '/post' && <Navbar/>}
+            <h1>Post</h1>
         </div>
     );
 }

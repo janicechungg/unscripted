@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
-import './style.css';
 import "bootstrap/dist/css/bootstrap.min.css"
+import '../style.css';
 
 export function Signup() {
     return (
@@ -18,10 +18,6 @@ export function Signup() {
                 </div>
                 <div class = "mb-3">
                     <label class = "form-label">Password</label>
-                    <input type = "password" placeHolder = "Enter Password" className = "form-control"/>
-                </div>
-                <div class = "mb-3">
-                    <label class = "form-label">Confirm password</label>
                     <input type = "password" placeHolder = "Enter Password" className = "form-control"/>
                 </div>
                 <div class = "mb-3">

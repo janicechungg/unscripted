@@ -5,12 +5,12 @@
 }
 
 body {
-    background: #EBDBC8;
+    background: #FAF4EC;
 }
 
 form {
     width:30%;
-    background-color: #FAF4EC;
+    background-color: #EBDBC8;
     padding: 50px;
     border-radius: 20px;
     margin-top: 150px;
@@ -38,6 +38,21 @@ form {
     border:none;
     border-bottom: 1px solid;
     border-radius: 4px 4px 0 0;
-    background-color:#FAF4EC;; 
+    background-color:#EBDBC8; 
+}
+
+/* style.css */
+.custom-navbar {
+    background-color: #EBDBC8;
+}
+
+.custom-navbar .navbar-brand,
+.custom-navbar .nav-link,
+.custom-navbar .navbar-text {
+    color: #AB8072;
+}
+
+.custom-navbar .nav-link:hover {
+    color: #946d5f; /* Change this to your desired hover color */
 }
 
