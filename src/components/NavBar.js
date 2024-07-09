@@ -24,13 +24,13 @@ export function Navbar() {
                             <Link className="nav-link" to="/">Home</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/featured">Featured</Link>
+                            <Link className="nav-link" to="/your-posts">Your Posts</Link>
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/post">Post</Link>
                         </li>
                     </ul>
-                    <button className="navbar-text " onClick={handleLogout}>
+                    <button className="navbar-text btn " onClick={handleLogout}>
                         Logout
                     </button>
                 </div>
