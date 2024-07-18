@@ -22,8 +22,6 @@ export function YourPosts() {
             } catch (error) {
                 if (error.response && error.response.status >= 400 && error.response.status <= 500) {
                     setError(error.response.data.message);
-                } else {
-                    setError('An unexpected error occurred. Please try again.');
                 }
             }
         };
@@ -32,6 +30,11 @@ export function YourPosts() {
     }, []);
 
     const handleDelete = async (postId) => {
+        const confirmed = window.confirm('Are you sure you want to delete this post?');
+        if (!confirmed) {
+            return;
+        }
+
         try {
             const token = localStorage.getItem('token');
             const headers = {

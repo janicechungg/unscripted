@@ -31,6 +31,18 @@ router.post('/create', auth, upload.single('image'), async (req, res) => {
         const { title, summary, content } = req.body;
         const image = req.file ? req.file.filename : null;
 
+        if (!image) {
+            return res.status(400).send({ message: 'Image is required' });
+        }
+
+        if (title.length > 50) {
+            return res.status(400).send({ message: 'Title cannot exceed 50 characters' });
+        }
+
+        if (summary.length > 100) {
+            return res.status(400).send({ message: 'Summary cannot exceed 100 characters' });
+        }
+
         const post = new Post({
             title,
             summary,
@@ -53,6 +65,31 @@ router.get('/user-posts', auth, async (req, res) => {
         res.status(200).send(posts);
     } catch (error) {
         console.error('Error fetching user posts:', error);
+        res.status(500).send({ message: 'Internal Server Error' });
+    }
+});
+
+// Route to fetch all posts
+router.get('/all-posts', async (req, res) => {
+    try {
+        const posts = await Post.find().populate('author', 'username');
+        res.status(200).send(posts);
+    } catch (error) {
+        console.error('Error fetching all posts:', error);
+        res.status(500).send({ message: 'Internal Server Error' });
+    }
+});
+
+// Route to fetch a single post by ID
+router.get('/:id', async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id).populate('author', 'username');
+        if (!post) {
+            return res.status(404).send({ message: 'Post not found' });
+        }
+        res.status(200).send(post);
+    } catch (error) {
+        console.error('Error fetching post:', error);
         res.status(500).send({ message: 'Internal Server Error' });
     }
 });

@@ -27,12 +27,17 @@ export function Navbar() {
                             <Link className="nav-link" to="/your-posts">Your Posts</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/post">Post</Link>
+                            <Link className="nav-link" to="/post">Create Post</Link>
                         </li>
                     </ul>
                     <button className="navbar-text btn " onClick={handleLogout}>
                         Logout
                     </button>
+                    <ul className="navbar-nav  mb-2 mb-lg-0">
+                    <li className="nav-item">
+                            <Link className="nav-link" to="/profile">Profile</Link>
+                        </li>
+                        </ul>
                 </div>
             </div>
         </nav>

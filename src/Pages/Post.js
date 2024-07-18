@@ -16,20 +16,56 @@ export function Post() {
     const [content, setContent] = useState('');
     const [image, setImage] = useState(null);
     const [error, setError] = useState('');
+    const [titleError, setTitleError] = useState('');
+    const [summaryError, setSummaryError] = useState('');
 
     const handleImageChange = (e) => {
         setImage(e.target.files[0]);
     };
 
+    const handleTitleChange = (e) => {
+        const value = e.target.value;
+        if (value.length > 50) {
+            setTitleError('Title cannot exceed 50 characters.');
+        } else {
+            setTitleError('');
+            setTitle(value);
+        }
+    };
+
+    const handleSummaryChange = (e) => {
+        const value = e.target.value;
+        if (value.length > 100) {
+            setSummaryError('Summary cannot exceed 100 characters.');
+        } else {
+            setSummaryError('');
+            setSummary(value);
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!image) {
+            setError('Image is required');
+            return;
+        }
+
+        if (title.length > 50) {
+            setError('Title cannot exceed 50 characters');
+            return;
+        }
+
+        if (summary.length > 100) {
+            setError('Summary cannot exceed 100 characters');
+            return;
+        }
+
         const formData = new FormData();
         formData.append('title', title);
         formData.append('summary', summary);
         formData.append('content', content);
-        if (image) {
-            formData.append('image', image);
-        }
+        formData.append('image', image);
 
         try {
             const url = 'http://localhost:5000/api/posts/create';
@@ -47,51 +83,58 @@ export function Post() {
     };
 
     return (
-        <div align = "center">
+        <div>
             {location.pathname === '/post' && <Navbar />}
-            <form onSubmit={handleSubmit} encType="multipart/form-data">
-                <div className="input-group input-group-lg mb-3">
-                    <input
-                        type="text"
-                        placeholder="Title"
-                        className="form-control"
-                        aria-label="Title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        required
-                    />
+            <div className="d-flex justify-content-center align-items-center min-vh-100">
+                <div className="w-50">
+                    <form onSubmit={handleSubmit} encType="multipart/form-data">
+                        <div className="input-group input-group-lg mb-3">
+                            <input
+                                type="text"
+                                placeholder="Title"
+                                className="form-control"
+                                aria-label="Title"
+                                value={title}
+                                onChange={handleTitleChange}
+                                required
+                            />
+                        </div>
+                        {titleError && <div className="alert alert-danger">{titleError}</div>}
+                        <div className="input-group mb-3">
+                            <input
+                                type="text"
+                                placeholder="Summary"
+                                className="form-control"
+                                aria-label="Summary"
+                                value={summary}
+                                onChange={handleSummaryChange}
+                                required
+                            />
+                        </div>
+                        {summaryError && <div className="alert alert-danger">{summaryError}</div>}
+                        <div className="mb-3">
+                            <input
+                                type="file"
+                                className="form-control"
+                                onChange={handleImageChange}
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <ReactQuill
+                                value={content}
+                                onChange={setContent}
+                                theme="snow"
+                                placeholder="Write your content here..."
+                            />
+                        </div>
+                        {error && <div className="alert alert-danger">{error}</div>}
+                        <div className="d-grid gap-2">
+                            <button className="btn btn-primary" type="submit">Post</button>
+                        </div>
+                    </form>
                 </div>
-                <div className="input-group mb-3">
-                    <input
-                        type="text"
-                        placeholder="Summary"
-                        className="form-control"
-                        aria-label="Summary"
-                        value={summary}
-                        onChange={(e) => setSummary(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <input
-                        type="file"
-                        className="form-control"
-                        onChange={handleImageChange}
-                    />
-                </div>
-                <div className="mb-3">
-                    <ReactQuill
-                        value={content}
-                        onChange={setContent}
-                        theme="snow"
-                        placeholder="Write your content here..."
-                    />
-                </div>
-                {error && <div className="alert alert-danger">{error}</div>}
-                <div className="d-grid gap-2">
-                    <button className="btn btn-primary" type="submit">Post</button>
-                </div>
-            </form>
+            </div>
         </div>
     );
 }
