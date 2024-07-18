@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Navbar } from '../components/NavBar';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -7,6 +7,7 @@ import '../style.css';
 
 export function YourPosts() {
     const location = useLocation();
+    const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
     const [error, setError] = useState("");
 
@@ -28,6 +29,13 @@ export function YourPosts() {
 
         fetchPosts();
     }, []);
+
+    const truncateContent = (content) => {
+        if (content.length > 150) {
+            return content.slice(0, 150) + '...';
+        }
+        return content;
+    };
 
     const handleDelete = async (postId) => {
         const confirmed = window.confirm('Are you sure you want to delete this post?');
@@ -55,7 +63,7 @@ export function YourPosts() {
         <div>
             {location.pathname === '/your-posts' && <Navbar />}
             <div className="container">
-                <h1>Your posts</h1>
+                <h1>Your Posts</h1>
                 {error && <div className="alert alert-danger">{error}</div>}
                 <div className="row">
                     {posts.map(post => (
@@ -67,14 +75,18 @@ export function YourPosts() {
                                 <div className="card-body d-flex flex-column">
                                     <h5 className="card-title">{post.title}</h5>
                                     <p className="card-text">{post.summary}</p>
-                                    <div
-                                        className="card-text mt-auto"
-                                        dangerouslySetInnerHTML={{ __html: post.content }}
-                                    />
-                                    <i 
-                                        className="fas fa-trash-alt trash-icon" 
-                                        onClick={() => handleDelete(post._id)}
-                                    ></i>
+                                    <p className="card-text"><small className="text-muted">By {post.author.username}</small></p>
+                                    <div className="card-text mt-auto">
+                                        <div dangerouslySetInnerHTML={{ __html: truncateContent(post.content) }} />
+                                        {post.content.length > 150 ? (
+                                            <Link to={`/post/${post._id}`} className="btn btn-primary mt-2">Read More</Link>
+                                        ) : (
+                                            <i
+                                                className="fas fa-trash-alt trash-icon"
+                                                onClick={() => handleDelete(post._id)}
+                                            ></i>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </div>

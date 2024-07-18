@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Navbar } from '../components/NavBar';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -25,6 +25,13 @@ export function Home() {
         fetchPosts();
     }, []);
 
+    const truncateContent = (content) => {
+        if (content.length > 150) {
+            return content.slice(0, 150) + '...';
+        }
+        return content;
+    };
+
     return (
         <div>
             {location.pathname === '/' && <Navbar />}
@@ -42,10 +49,12 @@ export function Home() {
                                     <h5 className="card-title">{post.title}</h5>
                                     <p className="card-text">{post.summary}</p>
                                     <p className="card-text"><small className="text-muted">By {post.author.username}</small></p>
-                                    <div
-                                        className="card-text mt-auto"
-                                        dangerouslySetInnerHTML={{ __html: post.content }}
-                                    />
+                                    <div className="card-text mt-auto">
+                                        <div dangerouslySetInnerHTML={{ __html: truncateContent(post.content) }} />
+                                        {post.content.length > 150 && (
+                                            <Link to={`/post/${post._id}`} className="btn btn-primary mt-2">Read More</Link>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -5,6 +5,7 @@ import { Signup } from "./Pages/Signup";
 import { YourPosts } from "./Pages/YourPosts";
 import { Post } from "./Pages/Post";
 import { Profile } from "./Pages/Profile";
+import { SinglePost } from "./Pages/SinglePost";  // Import the SinglePost component
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/your-posts" element={<YourPosts />} />
           <Route path="/post" element={<Post />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/post/:id" element={<SinglePost />} />  // Add route for SinglePost
           <Route path="/" exact element={<Navigate replace to="/login" />} />
         </Routes>
       </Router>

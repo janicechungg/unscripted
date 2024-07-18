@@ -61,7 +61,7 @@ router.post('/create', auth, upload.single('image'), async (req, res) => {
 // Route to fetch posts of the authenticated user
 router.get('/user-posts', auth, async (req, res) => {
     try {
-        const posts = await Post.find({ author: req.user._id });
+        const posts = await Post.find({ author: req.user._id }).populate('author', 'username');
         res.status(200).send(posts);
     } catch (error) {
         console.error('Error fetching user posts:', error);
