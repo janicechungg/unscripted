@@ -1,4 +1,4 @@
-*{
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -30,7 +30,6 @@ form {
     background: #946d5f;
 }
 
-
 .form-control {
     color: rgba(0,0,0,.87);
     border-bottom-color:rgba(0,0,0,.42);
@@ -41,7 +40,6 @@ form {
     background-color:#EBDBC8; 
 }
 
-/* style.css */
 .custom-navbar {
     background-color: #EBDBC8;
 }
@@ -56,11 +54,17 @@ form {
     color: #946d5f; /* Change this to your desired hover color */
 }
 
+.container {
+    padding: 15px 0; /* Adjust the padding for the container */
+}
+
 .card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    text-align: left; /* Align text to the left */
+    padding: 10px; /* Add padding to the card */
 }
 
 .card-img-top {
@@ -75,6 +79,7 @@ form {
 
 .card-title, .card-text {
     flex-grow: 1;
+    text-align: left; /* Ensure all text is left-aligned */
 }
 
 .trash-icon {
