@@ -85,8 +85,8 @@ export function Post() {
     return (
         <div>
             {location.pathname === '/post' && <Navbar />}
-            <div className="d-flex justify-content-center align-items-center min-vh-100">
-                <div className="w-50">
+            <div className="container">
+                <div className="row justify-content-center">
                     <form onSubmit={handleSubmit} encType="multipart/form-data">
                         <div className="input-group input-group-lg mb-3">
                             <input
@@ -121,16 +121,26 @@ export function Post() {
                             />
                         </div>
                         <div className="mb-3">
-                            <ReactQuill
-                                value={content}
-                                onChange={setContent}
-                                theme="snow"
-                                placeholder="Write your content here..."
-                            />
-                        </div>
+    <ReactQuill
+        value={content}
+        onChange={setContent}
+        theme="snow"
+        placeholder="Write your content here..."
+        style={{height: '400px'}}
+        modules={{
+            toolbar: [
+                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                ['bold', 'italic', 'underline', 'strike'],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                ['link', 'image'],
+                ['clean']
+            ],
+        }}
+    />
+</div>
                         {error && <div className="alert alert-danger">{error}</div>}
-                        <div className="d-grid gap-2">
-                            <button className="btn btn-primary" type="submit">Post</button>
+                        <div className="d-flex justify-content-center">
+                            <button className="btn btn-primary btn-sm" style={{width: '200px'}}type="submit">Post</button>
                         </div>
                     </form>
                 </div>

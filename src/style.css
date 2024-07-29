@@ -94,3 +94,12 @@ form {
 .trash-icon:hover {
     color: darkgray; /* Change this to the hover color you prefer */
 }
+
+.ql-container {
+    height: calc(400px - 42px) !important;
+    overflow-y: auto;
+}
+
+.ql-editor {
+    min-height: 100%;
+}

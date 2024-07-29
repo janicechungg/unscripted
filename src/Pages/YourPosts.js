@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Navbar } from '../components/NavBar';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -7,7 +7,6 @@ import '../style.css';
 
 export function YourPosts() {
     const location = useLocation();
-    const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
     const [error, setError] = useState("");
 
@@ -37,7 +36,10 @@ export function YourPosts() {
         return content;
     };
 
-    const handleDelete = async (postId) => {
+    const handleDelete = async (postId, e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
         const confirmed = window.confirm('Are you sure you want to delete this post?');
         if (!confirmed) {
             return;
@@ -79,17 +81,14 @@ export function YourPosts() {
                                         <p className="card-text"><small className="text-muted">By {post.author.username}</small></p>
                                         <div className="card-text mt-auto">
                                             <div dangerouslySetInnerHTML={{ __html: truncateContent(post.content) }} />
-                                            {post.content.length > 150 ? (
+                                            {post.content.length > 150 && (
                                                 <span className="btn btn-primary mt-2">Read More</span>
-                                            ) : (
-                                                <i
-                                                    className="fas fa-trash-alt trash-icon"
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        handleDelete(post._id);
-                                                    }}
-                                                ></i>
                                             )}
+                                            <i
+                                                className="fas fa-trash-alt trash-icon"
+                                                onClick={(e) => handleDelete(post._id, e)}
+                                                style={{ cursor: 'pointer', position: 'absolute', bottom: '10px', right: '10px', color: 'gray' }}
+                                            ></i>
                                         </div>
                                     </div>
                                 </div>
